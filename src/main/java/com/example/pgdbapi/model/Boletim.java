@@ -4,6 +4,7 @@ package com.example.pgdbapi.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "boletim")
@@ -32,6 +33,9 @@ public class Boletim {
     @ManyToOne
     @JoinColumn(name="usuario.id", nullable=false)
     private Usuario usuario;
+
+    @OneToMany
+    private List<Votos> votos;
 
     private boolean valido;
 }
