@@ -4,6 +4,8 @@ package com.example.pgdbapi.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Boletim {
+public class Boletim implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,12 +32,13 @@ public class Boletim {
 
     private int comparecimento;
 
+    private boolean valido;
+
     @ManyToOne
-    @JoinColumn(name="usuario.id", nullable=false)
+    @JoinColumn(name="usuario_id", nullable=false)
     private Usuario usuario;
 
-    @OneToMany
-    private List<Votos> votos;
+    @OneToMany(mappedBy="boletim",cascade=CascadeType.ALL,orphanRemoval=true)
+    private List<Votos> votos = new ArrayList<>();
 
-    private boolean valido;
 }

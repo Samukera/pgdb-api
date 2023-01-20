@@ -1,9 +1,13 @@
 package com.example.pgdbapi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -13,21 +17,21 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Votos {
+public class Votos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int qtd_votos;
 
-    private Date data;
+    private String data;
 
-    @ManyToOne
-    @JoinColumn(name="boletim.id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "boletim_id",  nullable = false)
     private Boletim boletim;
 
-    @ManyToOne
-    @JoinColumn(name="cadidato.id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;
 
 }

@@ -1,8 +1,14 @@
 package com.example.pgdbapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "candidato")
@@ -11,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Candidato {
+public class Candidato implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +31,10 @@ public class Candidato {
     private int numCand;
 
     @ManyToOne
-    @JoinColumn(name="partido.id", nullable=false)
+    @JoinColumn(name="partido_id", nullable=false)
     private Partido partido;
+
+    @OneToMany(mappedBy="candidato",cascade=CascadeType.ALL,orphanRemoval=true)
+    private List<Votos> votos = new ArrayList<>();
 
 }
