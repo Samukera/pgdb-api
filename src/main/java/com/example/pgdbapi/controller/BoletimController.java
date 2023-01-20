@@ -28,10 +28,11 @@ public class BoletimController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveBoletim(@RequestBody Boletim boletim, UriComponentsBuilder uriBuilder) throws Exception {
+    public ResponseEntity<Boletim> saveBoletim(@RequestBody Boletim boletim, UriComponentsBuilder uriBuilder) throws Exception {
         try {
-            String bo = boletimService.saveBoletim(boletim);
-            return ResponseEntity.ok().body(bo);
+            Boletim bo = boletimService.saveBoletim(boletim);
+            URI uri = uriBuilder.path("boletim/{id}").buildAndExpand(bo.getId()).toUri();
+            return ResponseEntity.created(uri).body(bo);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

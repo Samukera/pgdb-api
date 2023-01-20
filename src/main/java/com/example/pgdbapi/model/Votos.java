@@ -26,11 +26,7 @@ public class Votos implements Serializable {
 
     private String data;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "boletim_id",  nullable = false)
-    private Boletim boletim;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "candidato_id", nullable = false)
     private Candidato candidato;
 

@@ -38,7 +38,8 @@ public class Boletim implements Serializable {
     @JoinColumn(name="usuario_id", nullable=false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy="boletim",cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval=true)
+    @JoinColumn(name = "boletim_id")
     private List<Votos> votos = new ArrayList<>();
 
 }

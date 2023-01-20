@@ -19,4 +19,12 @@ public class CandidatoService {
             throw new Exception(e.getMessage());
         }
     }
+
+    public Candidato getById(Long id) throws Exception {
+        try {
+            return candidatoRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }
