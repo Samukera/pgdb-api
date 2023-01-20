@@ -32,7 +32,7 @@ public class Usuario implements UserDetails {
     private String datanasc;
 
     @Column(name = "isAdmin")
-    private boolean isAdmin;
+    private boolean isAdmin = false;
 
     @Transient
     @JsonIgnore
@@ -90,6 +90,6 @@ public class Usuario implements UserDetails {
     }
 
     public UsuarioDto toUsuarioDto() {
-        return new UsuarioDto(id,nome,email,datanasc);
+        return new UsuarioDto(id,nome,email,datanasc,isAdmin);
     }
 }

@@ -51,4 +51,14 @@ public class BoletimController {
             throw new Exception(e.getMessage());
         }
     }
+
+    @PostMapping("/validar")
+    public ResponseEntity<String> validarBoletim(@RequestBody Boletim boletim) throws Exception {
+        try {
+            String status = boletimService.validarBoletim(boletim);
+            return ResponseEntity.ok().body(status);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }

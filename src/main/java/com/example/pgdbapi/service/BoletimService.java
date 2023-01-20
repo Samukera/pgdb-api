@@ -39,4 +39,14 @@ public class BoletimService {
             throw new Exception(e.getMessage());
         }
     }
+
+    @Transactional
+    public String validarBoletim(Boletim boletim) throws Exception {
+        try {
+            boletimRepository.validarBoletim(boletim.getId(),boletim.getZona(), boletim.getSecao());
+            return "OK";
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }

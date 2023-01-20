@@ -5,12 +5,13 @@ import com.example.pgdbapi.model.Candidato;
 import com.example.pgdbapi.service.CandidatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/candidato")
@@ -30,8 +31,22 @@ public class CandidatoController {
     @GetMapping("/{id}")
     public ResponseEntity<Candidato> getCandidatoById(@PathVariable Long id) throws Exception {
         try {
-            Candidato u = candidatoService.getById(id);
-            return ResponseEntity.ok().body(u);
+            Optional<Candidato> u = candidatoService.getById(id);
+            if (u.isPresent()) {
+                return ResponseEntity.ok().body(u.get());
+            }
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Candidato> createCandidato(@RequestBody Candidato candidato, UriComponentsBuilder uriBuilder) throws Exception {
+        try {
+            Candidato cand = candidatoService.create(candidato);
+            URI uri = uriBuilder.path("candidato/{id}").buildAndExpand(cand.getId()).toUri();
+            return ResponseEntity.created(uri).body(cand);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
