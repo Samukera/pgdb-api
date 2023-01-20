@@ -12,4 +12,5 @@ public class UsuarioDto {
     private String nome;
     private String email;
     private String datanasc;
+    private boolean isAdmin;
 }

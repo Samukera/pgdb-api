@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CandidatoService {
@@ -20,9 +21,17 @@ public class CandidatoService {
         }
     }
 
-    public Candidato getById(Long id) throws Exception {
+    public Optional<Candidato> getById(Long id) throws Exception {
         try {
-            return candidatoRepository.findById(id).get();
+            return candidatoRepository.findById(id);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public Candidato create(Candidato candidato) throws Exception {
+        try {
+            return candidatoRepository.save(candidato);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
